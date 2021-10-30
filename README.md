@@ -123,6 +123,7 @@ zone "franky.e07.com" {
  echo nameserver 192.203.2.3 >> /etc/resolv.conf
  ```
  - Testing dengan command : ``` ping franky.e07.com```
+
 ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/5b.jpg) <br />
 
 
@@ -130,10 +131,10 @@ zone "franky.e07.com" {
 
 **Konfigurasi pada EniesLobby**
  - Edit file ```nano /etc/bind/kaizoku/franky.e07.com``` dan tambahkan konfig seperti gambar berikut :
- ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6a.jpg) <br />
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6a.jpg) <br />
 
  - Lalu edit file **nano /etc/bind/named.conf.options** dengan menambah comment **dnssec-validation auto**; dan tambahkan ``allow-query{any;};``. Lebih lengkapnya seperti gambar berikut :
- ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6b-c.jpg) <br />
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6b-c.jpg) <br />
 
  - Restart bind9 : ```service bind9 restart```
 

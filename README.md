@@ -106,6 +106,61 @@ ServerAlias www.franky.e07.com
 
 - Ketujuh, restart service apache. ``` service apache2 restart ```
 
+## (10) Setelah itu, pada subdomain www.super.franky.yyy.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.yyy.com .
+
+- Pertama, copy 000-default.conf ke super.franky.e07.com.conf. ``` cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/super.franky.e07.com.conf ```
+
+- Kedua, edit super.franky.e07.com.conf. ``` nano super.franky.e07.com.conf ```
+
+- Ketiga, tambahkan konfigurasi berikut.
+```
+ServerAdmin webmaster@localhost
+
+DocumentRoot /var/www/super.franky.e07.com
+ServerName super.franky.e07.com
+ServerAlias www.super.franky.e07.com
+```
+
+- Keempat, aktifkan super.franky.e07.com dan restart apache.
+```
+a2ensite super.franky.e07.com
+service apache2 restart
+```
+
+- Kelima, unzip super.franky.zip yang telah diclone di var/download. Dan pindahkan file ke var/www/super.franky.e07.com.
+```
+unzip /var/download/super.franky.zip -d /var/www
+mv /var/www/super.franky /var/www/super.franky.e07.com
+```
+
+- Keenam, install libapache dan restart apache.
+```
+apt-get install libapache2-mod-php7.0
+service apache2 restart
+```
+
+## (11) Akan tetapi, pada folder /public, Luffy ingin hanya dapat melakukan directory listing saja.
+
+- Pertama, buka file super.franky.e07.com.conf
+```
+nano /etc/apache2/sites-available/super.franky.e07.com.conf
+```
+
+- Kedua, tambahkan konfigurasi berikut
+```
+<Directory /var/www/super.franky.e07.com/public>
+	Options +Indexes
+</Directory>
+
+<Directory /var/www/super.franky.e07.com/public/*>
+	Options -Indexes
+</Directory>
+```
+
+- Ketiga, lakukan restart apache
+```
+service apache2 restart
+```
 
 ## Soal 13 : Membuat konfigurasi virtual host yang bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.
 

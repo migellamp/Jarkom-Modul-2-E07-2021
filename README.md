@@ -31,7 +31,7 @@ DocumentRoot /var/www/franky.e07.com
 ServerName franky.e07.com
 ServerAlias www.franky.e07.com
 ```
-![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/8a.png) <br />
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/08a.png) <br />
 
 - Ketujuh, aktifkan franky.e07.com dan restart service apache.
 ```
@@ -40,7 +40,7 @@ service apache2 restart
 ```
 
 Testing, buka node loguetown, ketik: ``` lynx franky.e07.com ```
-![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/8b.png) <br />
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/08b.png) <br />
 
 ## Download file yang diperlukan dari github
 - Pertama, instal git, utils, certificates, dan unzip.

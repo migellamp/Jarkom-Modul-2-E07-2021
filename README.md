@@ -17,6 +17,7 @@ Alias "/js" "/var/www/super.franky.e07.com/public/js/"
 ```
 - Keempat, Lakukan restart apache menggunakan ```service apache2 restart```
 - Output, Ketika mengakases www.super.franky.yyy.com/js :
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/13b.jpg) <br />
 
 ## Soal 14 : Web www.general.mecha.franky.yyy.com hanya bisa diakses dengan port 15000 dan port 15500
 
@@ -38,13 +39,18 @@ Listen 15500
 - Ketujuh, Untuk mengaktifkan (ENABLE) konfigurasi website yang telah dibuat gunakana ```a2ensite general.mecha.franky.e07.com```
 - Kedelapan, Unzip file requirement(yang sebelumnya sudah didownload pada no 8/9) dan pindahkan hasil unzip tersebut ke dalam ```mecha.franky /var/www/general.mecha.franky.e07.com```
 - Terakhir, Lakukan restart apache menggunakan ```service apache2 restart```
-- Output, Ketika mengakases www.general.mecha.franky.yyy.com:15000 :
+- Output, Ketika mengakases www.general.mecha.franky.yyy.com:8888 yaitu port yang tidak didaftarkan:
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/14a.jpg) <br />
+- Output, Ketika mengakases www.general.mecha.franky.yyy.com:15000 yaitu port yang didaftarkan:
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/14b.jpg) <br />
 
 ## Soal 15 : Autentikasi username luffy dan password onepiece
 - Pertama, Membuat sebuah autentikasi username dan password pada server menggunakan :
 ```
 htpasswd -c /etc/apache2/.htpasswd luffy 
 ```
+- Masukkan Password yang digunakan untuk user luffy
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/15a.jpg) <br />
 - Kedua, Masuk ke directory general.mecha.franky.e07 ```cd /var/www/general.mecha.franky.e07.com``` dan edit file .htaccess 
 - Ketiga, Edit file .htaccess dengan menambahkan syntax sebagai berikut:
 ```
@@ -65,6 +71,10 @@ Require valid-user
 ```
 - Terakhir, Lakukan restart apache menggunakan ```service apache2 restart```
 - Output, Ketika mengakases www.general.mecha.franky.yyy.com:15000 :
+- Jika user/passwordnya salah akan muncul tampilan seperti berikut:
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/15d.jpg) <br />
+- Jika user/passwordnya berhasil maka akan muncul tampilan seperti berikut:
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/15e.jpg) <br />
 
 ## Soal 16 : Setiap kali mengakses IP Skypie akan dialihkan secara otomatis ke www.franky.yyy.com
 - Pertama, Masuk ke dalam directory "sites-available" ```cd /etc/apache2/sites-available```
@@ -75,6 +85,7 @@ redirect permanent / http://franky.e07.com
 - Sehingga, ketika kita mengakases IP Skypie maka otomatis akan redirect permanent ke web www.franky.e07.com
 - Terakhir, Lakukan restart apache menggunakan ```service apache2 restart```
 - Output, Ketika mengakases 192.203.2.4 :
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/16.jpg) <br />
 
 ## Soal 17 : Setiap terdapat kata franky, maka otomatis langsung akan dialihkan ke super.franky.e07.com/public/images/franky.png
 - Pertama, Masuk ke directory ```cd /var/www/super.franky.e07.com``` untuk mengakses file .htaccess, yang mana pada file tersebut terdapat syntax untuk mendeteksi kata yang terdapat kalimat franky
@@ -106,6 +117,7 @@ Keterangan :
 
 - Terakhir, Lakukan restart apache menggunakan ```service apache2 restart```
 - Output, Ketika mengakases super.franky.e07.com/franky :
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/17b.jpg) <br />
 
 
 

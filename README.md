@@ -1,7 +1,7 @@
 # Jarkom-Modul-2-E07-2021
 Laporan Resmi Soal Shift Modul 2
 
-## (8) Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.franky.yyy.com. Pertama, luffy membutuhkan webserver dengan DocumentRoot pada /var/www/franky.yyy.com.
+## Soal 8 : Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.franky.yyy.com. Pertama, luffy membutuhkan webserver dengan DocumentRoot pada /var/www/franky.yyy.com.
 
 Pada node ubuntu Skypie:
 
@@ -62,7 +62,7 @@ apt-get install libapache2-mod-php7.0
 service apache2 restart
 ```
 
-## (9) Setelah itu, Luffy juga membutuhkan agar url www.franky.yyy.com/index.php/home dapat menjadi menjadi www.franky.yyy.com/home. 
+## Soal 9 : Setelah itu, Luffy juga membutuhkan agar url www.franky.yyy.com/index.php/home dapat menjadi menjadi www.franky.yyy.com/home. 
 
 - Pertama, pindah ke var/www. 
 ```
@@ -106,7 +106,7 @@ ServerAlias www.franky.e07.com
 
 - Ketujuh, restart service apache. ``` service apache2 restart ```
 
-## (10) Setelah itu, pada subdomain www.super.franky.yyy.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.yyy.com .
+## Soal 10 : Setelah itu, pada subdomain www.super.franky.yyy.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.yyy.com .
 
 - Pertama, copy 000-default.conf ke super.franky.e07.com.conf. ``` cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/super.franky.e07.com.conf ```
 
@@ -139,7 +139,7 @@ apt-get install libapache2-mod-php7.0
 service apache2 restart
 ```
 
-## (11) Akan tetapi, pada folder /public, Luffy ingin hanya dapat melakukan directory listing saja.
+## Soal 11 : Akan tetapi, pada folder /public, Luffy ingin hanya dapat melakukan directory listing saja.
 
 - Pertama, buka file super.franky.e07.com.conf
 ```
@@ -161,6 +161,25 @@ nano /etc/apache2/sites-available/super.franky.e07.com.conf
 ```
 service apache2 restart
 ```
+## Soal 12 : Tidak hanya itu, Luffy juga menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache .
+
+- Pertama, buka dan edit file super.franky.e07.com.conf. ``` nano /etc/apache2/sites-available/super.franky.e07.com.conf ```
+
+- Kedua, tambahkan konfigurasi di bawah
+```
+ErrorLog ${APACHE_LOG_DIR}/error.log
+ErrorDocument 404 /var/www/super.franky.e07.com/error/404.html
+CustomLog ${APACHE_LOG_DIR}/acces.log combined
+
+ErrorDocument 404 /error/404.html
+
+<Files "/error/404.html">
+	<If "-z %{ENV:REDIRECT_STATUS}">
+		RedirectMatch 404 /error/404.html$
+	</If>
+</Files>
+```
+Lalu restart apache. ``` service apache2 restart ```
 
 ## Soal 13 : Membuat konfigurasi virtual host yang bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.
 

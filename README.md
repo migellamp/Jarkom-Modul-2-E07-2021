@@ -1,6 +1,215 @@
 # Jarkom-Modul-2-E07-2021
 Laporan Resmi Soal Shift Modul 2
 
+Pertama, buat topologi sesuai gambar dengan IP Kelompok masing-masing sampai bisa terhubung ke internet. Lalu hubungkan semua host ke internet.
+
+## Soal 2  : Membuat website utama dengan mengakses franky.yyy.com dengan alias www.franky.yyy.com pada folder kaizoku
+- Install bind9 pada host EniesLobby dengan command : 
+```
+apt-get update
+apt-get install bind9 -y
+```
+- Pada host EnisLobby buat website dengan mengedit file **named.conf.local** seperti gambar berikut: 
+```
+nano /etc/bind/named.conf.local
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/2a.jpg) <br />
+
+- Buat folder kaizoku di /etc/bind Lalu copykan file db.local pada path /etc/bind ke dalam folder kaizoku yang baru saja dibuat dan ubah namanya menjadi franky.e07.com
+```
+cp /etc/bind/db.local /etc/bind/kaizoku/franky.e07.com
+```
+
+- Kemudian buka file franky.e07.com dan edit seperti gambar berikut :
+```
+nano /etc/bind/kaizoku/franky.e07.com
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/2b.jpg) <br />
+
+- Restart bind : ``` service bind9 restart ```
+
+- Pada client Loguetown arahkan nameserver ke IP Enieslobby dengan cara :
+```
+echo nameserver 192.203.2.2 > /etc/resolv.conf
+```
+
+- Tes koneksi pada Loguetown dengan command :
+``` 
+ping franky.e07.com
+ping www.franky.e07.com
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/2c.jpg) <br />
+
+## Soal 3. Membuat subdomain super.franky.yyy.com dengan alias www.super.franky.yyy.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie
+- Edit file franky.e07.com dan tambahkan konfig seperti gambar berikut :
+```
+nano /etc/bind/kaizoku/franky.e07.com
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/3a.jpg) <br />
+
+- Restart bind : `` service bind9 restart ``
+
+- Tes koneksi pada Loguetown dengan command :
+``` 
+ping super.franky.e07.com
+ping www.super.franky.e07.com
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/3b.jpg) <br />
+
+## Soal 4. Buat juga reverse domain untuk domain utama
+- Edit file **nano /etc/bind/named.conf.local** dan tambahkan konfig seperti gambar berikut :
+```
+zone "2.203.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/kaizoku/2.203.192.in-addr.arpa";
+};
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/4a.jpg) <br />
+
+- Copy file dari db.local ke direktori **kaizoku** dan ganti nama menjadi **2.203.192.in-addr.arpa**, lalu edit file tersebut seperti gambar berikut :
+```
+cp /etc/bind/db.local /etc/bind/kaizoku/2.203.192.in-addr.arpa
+```
+``` 
+nano /etc/bind/kaizoku/2.203.192.in-addr.arpa
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/4b.jpg) <br />
+
+- Restart bind : `` service bind9 restart ``
+
+- Tes koneksi pada Loguetown dengan command : 
+``` host -t PTR 192.203.2.4 ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/4c.jpg) <br />
+
+## Soal 5.  Membuat Water7 sebagai DNS Slave untuk domain utama
+**Konfigurasi pada server EniesLobby**
+
+ - Edit file **nano /etc/bind/named.conf.local** dan tambahkan konfig seperti gambar berikut :
+ ```
+zone "franky.e07.com" {
+    type master;
+    notify yes;
+    also-notify { 192.203.2.3; };
+    allow-transfer { 192.203.2.3; };
+    file "/etc/bind/kaizoku/franky.e07.com";
+};
+```
+ ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/5a.jpg) <br />
+
+ - Restart bind : `` service bind9 restart `` 
+
+**Konfigurasi pada server Water7**
+ - Install bind9 terlebih dahulu : 
+        ```
+        apt-get update
+        apt-get install bind9 -y
+        ```
+
+ - Edit file **nano /etc/bind/named.conf.local** dan tambahkan konfig berikut :
+        ```
+        zone "franky.e07.com" {
+                type slave;
+                masters { 192.203.2.2; };
+                file "/var/lib/bind/franky.e07.com";
+        };
+        ```       
+
+ - Restart bind : `` service bind9 restart `` 
+
+**Testing**
+ - Pada host EniesLobby, matikan bind9 dengan command : ```service bind9 stop```
+ - Pada Loguetown, tambahkan nameserver IP Water7 dengan cara : 
+ ```
+ echo nameserver 192.203.2.3 >> /etc/resolv.conf
+ ```
+ - Testing dengan command : ``` ping franky.e07.com```
+ ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/5b.jpg) <br />
+
+
+## Soal 6 : Delegasi subdomain mecha.franky.yyy.com dengan alias www.mecha.franky.yyy.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo
+
+**Konfigurasi pada EniesLobby**
+ - Edit file ```nano /etc/bind/kaizoku/franky.e07.com``` dan tambahkan konfig seperti gambar berikut :
+ ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6a.jpg) <br />
+
+ - Lalu edit file **nano /etc/bind/named.conf.options** dengan menambah comment **dnssec-validation auto**; dan tambahkan ``allow-query{any;};``. Lebih lengkapnya seperti gambar berikut :
+ ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6b-c.jpg) <br />
+
+ - Restart bind9 : ```service bind9 restart```
+
+**Konfigurasi pada Water7**
+- Edit file dengan command **nano /etc/bind/named.conf.options** dengan menambah comment **dnssec-validation auto**; dan tambahkan ``allow-query{any;};``. Lebih lengkapnya seperti gambar berikut :
+        ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6b-c.jpg) <br />
+
+- Edit file **named.conf.local** dan tambahkan konfig berikut :
+        ```
+        nano /etc/bind/named.conf.local
+        ```
+        ```
+        zone "mecha.franky.e07.com" {
+                type master;
+                file "/etc/bind/sunnygo/mecha.franky.e07.com";
+        };
+        ```  
+
+- Buat file dalam direktori **sunnygo** dengan command **nano /etc/bind/sunnygo/mecha.franky.e07.com** lalu masukkan config seperti berikut :
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     mecha.franky.e07.com. root.mecha.franky.e07.com. (
+                       2021102401       ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@               IN      NS      mecha.franky.e07.com.
+@               IN      A       192.203.2.4
+```
+
+- Restart bind9 : ```service bind9 restart```
+
+**Testing**
+- Pada Loguetown, coba : 
+```
+ping mecha.franky.e07.com
+ping www.mecha.franky.e07.com
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6d.jpg) <br />
+
+## Soal 7. Membuat subdomain melalui Water7 dengan nama general.mecha.franky.yyy.com dengan alias www.general.mecha.franky.yyy.com yang mengarah ke Skypie
+
+- Edit file dengan command **nano /etc/bind/sunnygo/mecha.franky.e07.com** lalu tambahkan config seperti di bawah ini :
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     mecha.franky.e07.com. root.mecha.franky.e07.com. (
+                       2021102401       ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@               IN      NS      mecha.franky.e07.com.
+@               IN      A       192.203.2.4             ; IP skypie
+www             IN      CNAME   mecha.franky.e07.com.
+general         IN      A       192.203.2.4             ; IP skypie
+www.general     IN      CNAME   mecha.franky.e07.com.
+```
+
+- Restart bind9 : ```service bind9 restart```
+
+**Testing**
+- Pada Loguetown, coba : 
+```
+ping general.mecha.franky.e07.com
+ping www.general.mecha.franky.e07.com
+```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/7testing.jpg) <br />
 ## Soal 8 : Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.franky.yyy.com. Pertama, luffy membutuhkan webserver dengan DocumentRoot pada /var/www/franky.yyy.com.
 
 Pada node ubuntu Skypie:

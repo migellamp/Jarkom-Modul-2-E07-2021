@@ -94,7 +94,7 @@ zone "franky.e07.com" {
     file "/etc/bind/kaizoku/franky.e07.com";
 };
 ```
- ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/5a.jpg) <br />
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/5a.jpg) <br />
 
  - Restart bind : `` service bind9 restart `` 
 
@@ -123,7 +123,7 @@ zone "franky.e07.com" {
  echo nameserver 192.203.2.3 >> /etc/resolv.conf
  ```
  - Testing dengan command : ``` ping franky.e07.com```
- ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/5b.jpg) <br />
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/5b.jpg) <br />
 
 
 ## Soal 6 : Delegasi subdomain mecha.franky.yyy.com dengan alias www.mecha.franky.yyy.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo
@@ -139,7 +139,7 @@ zone "franky.e07.com" {
 
 **Konfigurasi pada Water7**
 - Edit file dengan command **nano /etc/bind/named.conf.options** dengan menambah comment **dnssec-validation auto**; dan tambahkan ``allow-query{any;};``. Lebih lengkapnya seperti gambar berikut :
-        ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6b-c.jpg) <br />
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6b-c.jpg) <br />
 
 - Edit file **named.conf.local** dan tambahkan konfig berikut :
 ```
@@ -210,6 +210,7 @@ ping general.mecha.franky.e07.com
 ping www.general.mecha.franky.e07.com
 ```
 ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/7testing.jpg) <br />
+
 ## Soal 8 : Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.franky.yyy.com. Pertama, luffy membutuhkan webserver dengan DocumentRoot pada /var/www/franky.yyy.com.
 
 Pada node ubuntu Skypie:

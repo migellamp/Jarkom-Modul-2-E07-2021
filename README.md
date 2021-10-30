@@ -1,6 +1,69 @@
 # Jarkom-Modul-2-E07-2021
 Laporan Resmi Soal Shift Modul 2
 
+## (8) Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.franky.yyy.com. Pertama, luffy membutuhkan webserver dengan DocumentRoot pada /var/www/franky.yyy.com.
+
+Pada node ubuntu Skypie:
+
+- Pertama, buat node Skypie tersambung dengan internet. ``` echo nameserver 192.168.122.1 > /etc/resolv.conf ```
+
+- Kedua, install apache, install php, dan jalankan apache.
+
+```
+apt-get install apache2 -y
+service apache2 start
+apt-get install php -y
+php -v
+service apache2 start
+```
+
+- Ketiga, Masuk ke dalam directory "sites-available". ```cd /etc/apache2/sites-available ```
+
+- Keempat, salin file dari ``` /etc/apache2/sites-available/000-default.conf ke /etc/apache2/sites-available/franky.e07.com.conf ```
+
+- Kelima, Edit file "franky.e07.com.conf". ``` nano /etc/apache2/sites-available/super.franky.e07.com.conf ```
+
+- Keenam, tambahkan konfigurasi ke file tersebut
+```
+ServerAdmin webmaster@localhost
+
+DocumentRoot /var/www/franky.e07.com
+ServerName franky.e07.com
+ServerAlias www.franky.e07.com
+```
+
+Ketujuh, aktifkan franky.e07.com dan restart service apache.
+```
+a2ensite franky.e07.com
+service apache2 restart
+```
+
+## Download file yang diperlukan dari github
+- Pertama, instal git, utils, certificates, dan unzip.
+```
+apt-get install git -y
+apt-get install apt-utils -y
+apt-get install -y ca-certificates
+apt-get install unzip -y
+```
+
+- Kedua, buat folder /var/download, untuk menyimpen hasil clone dari github. ``` mkdir /var/download ```
+
+- Ketiga, clone github yang berisi file tadi, unzip ke hasilnya folder /var/www
+```
+git clone https://github.com/FeinardSlim/Praktikum-Modul-2-Jarkom /var/download
+unzip /var/download/franky.zip -d /var/www
+```
+
+- Keempat, pindahkan hasil unzip tadi ke path yang dibutuhkan
+```
+mv /var/www/franky /var/www/franky.e07.com
+apt-get install libapache2-mod-php7.0
+service apache2 restart
+```
+
+
+
 ## Soal 13 : Membuat konfigurasi virtual host yang bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.
 
 - Pertama, Masuk ke dalam directory "sites-available" ```cd /etc/apache2/sites-available```

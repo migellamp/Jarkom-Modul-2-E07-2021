@@ -32,7 +32,7 @@ ServerName franky.e07.com
 ServerAlias www.franky.e07.com
 ```
 
-Ketujuh, aktifkan franky.e07.com dan restart service apache.
+- Ketujuh, aktifkan franky.e07.com dan restart service apache.
 ```
 a2ensite franky.e07.com
 service apache2 restart
@@ -62,6 +62,49 @@ apt-get install libapache2-mod-php7.0
 service apache2 restart
 ```
 
+## (9) Setelah itu, Luffy juga membutuhkan agar url www.franky.yyy.com/index.php/home dapat menjadi menjadi www.franky.yyy.com/home. 
+
+- Pertama, pindah ke var/www. 
+```
+a2enmod rewrite
+service apache2 restart
+cd /var/www/franky.e07.com/
+```
+
+- Kedua, buat dan edit file .htacces. ``` nano .htaccess ```
+
+- Ketiga, isikan konfigurasi berikut pada file tersebut
+```
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^home$ /index.php/home [L]
+
+##RewriteRule ^([^\.]+)$ $1.php [NC,L]##
+```
+
+- Keempat, pindah ke folder "sites-available" 
+```
+cd /etc/apache2/sites-available
+```
+
+- Kelima, edit dan buat file franky.e07.com.conf. ``` nano franky.e07.com.conf ```
+
+- Keenam, tambahkan konfigurasi berikut.
+```
+ServerAdmin webmaster@localhost
+
+DocumentRoot /var/www/franky.e07.com
+ServerName franky.e07.com
+ServerAlias www.franky.e07.com
+	
+<Directory /var/www/franky.e07.com>
+     	Options +FollowSymLinks -Multiviews
+     	AllowOverride All
+</Directory>
+```
+
+- Ketujuh, restart service apache. ``` service apache2 restart ```
 
 
 ## Soal 13 : Membuat konfigurasi virtual host yang bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.

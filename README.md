@@ -171,11 +171,16 @@ nano /etc/apache2/sites-available/super.franky.e07.com.conf
 	Options -Indexes
 </Directory>
 ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/11a.png) <br />
 
 - Ketiga, lakukan restart apache
 ```
 service apache2 restart
 ```
+
+Testing, buka node loguetown, ketik: ``` lynx super.franky.e07.com/ ``` lalu arahkan dan enter ke public.
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/11b.png) <br />
+
 ## Soal 12 : Tidak hanya itu, Luffy juga menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache .
 
 - Pertama, buka dan edit file super.franky.e07.com.conf. ``` nano /etc/apache2/sites-available/super.franky.e07.com.conf ```
@@ -194,7 +199,13 @@ ErrorDocument 404 /error/404.html
 	</If>
 </Files>
 ```
+
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/12a.png) <br />
+
 Lalu restart apache. ``` service apache2 restart ```
+
+Testing, buka node loguetown, ketik: ``` lynx super.franky.e07.com/haha ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/12b.png) <br />
 
 ## Soal 13 : Membuat konfigurasi virtual host yang bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.
 

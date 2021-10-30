@@ -85,7 +85,7 @@ nano /etc/bind/kaizoku/2.203.192.in-addr.arpa
 **Konfigurasi pada server EniesLobby**
 
  - Edit file **nano /etc/bind/named.conf.local** dan tambahkan konfig seperti gambar berikut :
- ```
+```
 zone "franky.e07.com" {
     type master;
     notify yes;
@@ -100,19 +100,19 @@ zone "franky.e07.com" {
 
 **Konfigurasi pada server Water7**
  - Install bind9 terlebih dahulu : 
-        ```
-        apt-get update
-        apt-get install bind9 -y
-        ```
+```
+apt-get update
+apt-get install bind9 -y
+```
 
  - Edit file **nano /etc/bind/named.conf.local** dan tambahkan konfig berikut :
-        ```
-        zone "franky.e07.com" {
-                type slave;
-                masters { 192.203.2.2; };
-                file "/var/lib/bind/franky.e07.com";
-        };
-        ```       
+```
+zone "franky.e07.com" {
+	type slave;
+	masters { 192.203.2.2; };
+	file "/var/lib/bind/franky.e07.com";
+};
+```       
 
  - Restart bind : `` service bind9 restart `` 
 
@@ -142,15 +142,15 @@ zone "franky.e07.com" {
         ![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/6b-c.jpg) <br />
 
 - Edit file **named.conf.local** dan tambahkan konfig berikut :
-        ```
-        nano /etc/bind/named.conf.local
-        ```
-        ```
-        zone "mecha.franky.e07.com" {
-                type master;
-                file "/etc/bind/sunnygo/mecha.franky.e07.com";
-        };
-        ```  
+```
+nano /etc/bind/named.conf.local
+```
+```
+zone "mecha.franky.e07.com" {
+	type master;
+	file "/etc/bind/sunnygo/mecha.franky.e07.com";
+};
+```  
 
 - Buat file dalam direktori **sunnygo** dengan command **nano /etc/bind/sunnygo/mecha.franky.e07.com** lalu masukkan config seperti berikut :
 ```

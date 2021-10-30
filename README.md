@@ -87,6 +87,8 @@ RewriteRule ^home$ /index.php/home [L]
 ##RewriteRule ^([^\.]+)$ $1.php [NC,L]##
 ```
 
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/09a.png) <br />
+
 - Keempat, pindah ke folder "sites-available" 
 ```
 cd /etc/apache2/sites-available
@@ -107,8 +109,12 @@ ServerAlias www.franky.e07.com
      	AllowOverride All
 </Directory>
 ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/09b.png) <br />
 
 - Ketujuh, restart service apache. ``` service apache2 restart ```
+
+Testing, buka node loguetown, ketik: ``` lynx franky.e07.com/home ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/09c.png) <br />
 
 ## Soal 10 : Setelah itu, pada subdomain www.super.franky.yyy.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.yyy.com .
 
@@ -124,6 +130,7 @@ DocumentRoot /var/www/super.franky.e07.com
 ServerName super.franky.e07.com
 ServerAlias www.super.franky.e07.com
 ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/10a.png) <br />
 
 - Keempat, aktifkan super.franky.e07.com dan restart apache.
 ```
@@ -136,12 +143,16 @@ service apache2 restart
 unzip /var/download/super.franky.zip -d /var/www
 mv /var/www/super.franky /var/www/super.franky.e07.com
 ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/10b.png) <br />
 
 - Keenam, install libapache dan restart apache.
 ```
 apt-get install libapache2-mod-php7.0
 service apache2 restart
 ```
+
+Testing, buka node loguetown, ketik: ``` lynx super.franky.e07.com/ ```
+![alt text](https://github.com/migellamp/Jarkom-Modul-2-E07-2021/blob/main/images/10c.png) <br />
 
 ## Soal 11 : Akan tetapi, pada folder /public, Luffy ingin hanya dapat melakukan directory listing saja.
 
